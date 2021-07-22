@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Hello World, Bear Blog">
+    <meta name="keywords" content="深拷贝与浅拷贝, Bear Blog">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Hello World | Bear Blog</title>
+    <title>深拷贝与浅拷贝 | Bear Blog</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -289,12 +289,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/20.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Hello World</h1>
+                    <h1 class="description center-align post-title">深拷贝与浅拷贝</h1>
                 </div>
             </div>
         </div>
@@ -410,12 +410,8 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Hello-word/">
-                                <span class="chip bg-color">Hello word</span>
-                            </a>
-                        
-                            <a href="/tags/%E6%B5%8B%E8%AF%95/">
-                                <span class="chip bg-color">测试</span>
+                            <a href="/tags/C/">
+                                <span class="chip bg-color">C#</span>
                             </a>
                         
                     </div>
@@ -426,8 +422,12 @@
                     <div class="post-cate">
                         <i class="fas fa-bookmark fa-fw icon-category"></i>
                         
-                            <a href="/categories/%E6%B5%8B%E8%AF%95/" class="post-category">
-                                测试
+                            <a href="/categories/C/" class="post-category">
+                                C#
+                            </a>
+                        
+                            <a href="/categories/C/NET/" class="post-category">
+                                .NET
                             </a>
                         
                     </div>
@@ -439,7 +439,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2021-07-20
+                    2021-07-22
                 </div>
                 
 
@@ -448,14 +448,14 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    73
+                    782
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-clock fa-fw"></i>阅读时长:&nbsp;&nbsp;
-                    1 分
+                    3 分
                 </div>
                 
 
@@ -475,19 +475,68 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre class=" language-bash"><code class="language-bash">$ hexo new <span class="token string">"My New Post"</span>
+                <h3 id="一，概念"><a href="#一，概念" class="headerlink" title="一，概念"></a>一，概念</h3><p><strong>浅拷贝</strong>：是指将对象中的所有字段全部复制到一个新对象。对于值类型只是拷贝一个副本到新对象，改变新对象中值类型字段的值不会影响到原对象字段的值。对于引用类型字段则是拷贝原对象的一个引用到新对象。由于拷贝的是指向堆中数据的一个引用地址，所以改变新对象中引用类型字段的值之后原对象字段的值也会改变。</p>
+<p><strong>深拷贝</strong>：深拷贝和浅拷贝不同之处在于对引用类型字段的处理，深拷贝会重新开辟内存，把原对象全部拷贝。所以我们改变新对象中字段的值不会影响到原有对象中变量的值。</p>
+<h3 id="二，特殊的string类型"><a href="#二，特殊的string类型" class="headerlink" title="二，特殊的string类型"></a>二，特殊的string类型</h3><p>string类型虽然是引用类型，但是用起来更像是值类型。<br><img src="%5Cimages%5Cpasted-11.png" alt="upload successful"></p>
+<p>从运行结果看 str的赋值并没有影响到str1。按道理如果是引用类型的话，两者的引用都会指向堆中同一块内存区域，两者的改变是会相互影响的。所以通过这个例子string类型用起来更像是值类型。<br>所以对于string类型的话，在拷贝中也是和值类型的模式一样。</p>
+<p><strong>那么，导致这种情况的原因是什么呢？</strong></p>
+<p><img src="%5Cimages%5Cpasted-13.png" alt="upload successful"><br>通过string的源码可以看出它是只读的(不可变的)。因为一旦修改创建了该对象，就不能对其修改。<br>有的时候看起来改变了，实际是string经过了特殊处理，每次改变值时都会建立一个新的string对象，变量会指向这个新的对象，而原来的变量还是指向原来的对象，所以不会被改变。<br>所以使用string效率较低，如果频繁改变string的值应该使用StringBuilder。</p>
+<h3 id="三，实现浅拷贝和深拷贝"><a href="#三，实现浅拷贝和深拷贝" class="headerlink" title="三，实现浅拷贝和深拷贝"></a>三，实现浅拷贝和深拷贝</h3><h4 id="浅拷贝"><a href="#浅拷贝" class="headerlink" title="浅拷贝"></a>浅拷贝</h4><p><img src="%5Cimages%5Cpasted-16.png" alt="upload successful"><br>如上图代码所示，新对象被浅拷贝出来之后。修改原对象的值类型和string类型的字段的值，并不会对新对象中所对应的字段产生影响。而修改原对象中的引用类型的<br>值，那么新对象所对应的值也发生改变。</p>
+<h4 id="深拷贝"><a href="#深拷贝" class="headerlink" title="深拷贝"></a>深拷贝</h4><p>深拷贝的几种实现方式：</p>
+<h5 id="反射"><a href="#反射" class="headerlink" title="反射"></a>反射</h5><pre class=" language-c#"><code class="language-c#">  public static TOut DeepClone<TIn, TOut>(TIn tIn)
+  &#123;
+      TOut tOut = Activator.CreateInstance<TOut>();
+      var tInType = tIn.GetType();
+      foreach (var itemOut in tOut.GetType().GetProperties())
+      &#123;
+          var itemIn = tInType.GetProperty(itemOut.Name);
+          if (itemIn != null)
+          &#123;
+              itemOut.SetValue(tOut, itemIn.GetValue(tIn));
+          &#125;
+      &#125;
+      return tOut;
+  &#125;
 </code></pre>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre class=" language-bash"><code class="language-bash">$ hexo server
+<h5 id="序列号和反序列化"><a href="#序列号和反序列化" class="headerlink" title="序列号和反序列化"></a>序列号和反序列化</h5><pre class=" language-c#"><code class="language-c#">var ss=JsonConvert.DeserializeObject<RoomDto>(JsonConvert.SerializeObject(dtoToResult));
 </code></pre>
-<p><img src="%5Cimages%5Cpasted-8.png%5C" alt="upload successful"><br>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre class=" language-bush"><code class="language-bush">$ hexo generate
+<h5 id="表达式树"><a href="#表达式树" class="headerlink" title="表达式树"></a>表达式树</h5><pre class=" language-c#"><code class="language-c#">public static class ExpressionCloneHelper<TIn, TOut>
+    &#123;
+        private static readonly Func<TIn, TOut> cache = GetFunc();
+        private static Func<TIn, TOut> GetFunc()
+        &#123;
+            ParameterExpression parameterExpression = Expression.Parameter(typeof(TIn), "p");
+            List<MemberBinding> memberBindingList = new List<MemberBinding>();
+
+            foreach (var item in typeof(TOut).GetProperties())
+            &#123;
+                if (!item.CanWrite)continue;
+                MemberExpression property = Expression.Property(parameterExpression, typeof(TIn).GetProperty(item.Name));
+                MemberBinding memberBinding = Expression.Bind(item, property);
+                memberBindingList.Add(memberBinding);
+            &#125;
+
+            MemberInitExpression memberInitExpression = Expression.MemberInit(Expression.New(typeof(TOut)), memberBindingList.ToArray());
+            Expression<Func<TIn, TOut>> lambda = Expression.Lambda<Func<TIn, TOut>>(memberInitExpression, new ParameterExpression[] &#123; parameterExpression &#125;);
+
+            return lambda.Compile();
+        &#125;
+
+        public static TOut Trans(TIn tIn)
+        &#123;
+            return cache(tIn);
+        &#125;
+    &#125;
+![upload successful](\\images\pasted-24.png\)
 </code></pre>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre class=" language-bash"><code class="language-bash">$ hexo deploy
+<h5 id="AutoMapper"><a href="#AutoMapper" class="headerlink" title="AutoMapper"></a>AutoMapper</h5><pre class=" language-c#"><code class="language-c#">CreateMap<RoomDto, RoomDto>();
+
+var ss = _mapper.Map<RoomDto>(dtoToResult);
+ss.RoomNo = "1111";
+Console.WriteLine(JsonConvert.SerializeObject(dtoToResult));
+Console.WriteLine(JsonConvert.SerializeObject(ss));
 </code></pre>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<p><img src="%5Cimages%5Cpasted-27.png" alt="upload successful"></p>
 
                 
             </div>
@@ -514,7 +563,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://CodeBear.com/2021/07/20/hello-world/">http://CodeBear.com/2021/07/20/hello-world/</a>
+                    <a href="http://CodeBear.com/2021/07/22/%E6%B7%B1%E6%8B%B7%E8%B4%9D%E4%B8%8E%E6%B5%85%E6%8B%B7%E8%B4%9D/">http://CodeBear.com/2021/07/22/%E6%B7%B1%E6%8B%B7%E8%B4%9D%E4%B8%8E%E6%B5%85%E6%8B%B7%E8%B4%9D/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -552,12 +601,8 @@
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Hello-word/">
-                                    <span class="chip bg-color">Hello word</span>
-                                </a>
-                            
-                                <a href="/tags/%E6%B5%8B%E8%AF%95/">
-                                    <span class="chip bg-color">测试</span>
+                                <a href="/tags/C/">
+                                    <span class="chip bg-color">C#</span>
                                 </a>
                             
                         </div>
@@ -723,9 +768,9 @@
 
 <script type="text/javascript">
     disqus_config = function () {
-        this.page.url = 'http://codebear.com/2021/07/20/hello-world/';
-        this.page.identifier = '/2021/07/20/hello-world/';
-        this.page.title = 'Hello World';
+        this.page.url = 'http://codebear.com/2021/07/22/%E6%B7%B1%E6%8B%B7%E8%B4%9D%E4%B8%8E%E6%B5%85%E6%8B%B7%E8%B4%9D/';
+        this.page.identifier = '/2021/07/22/%E6%B7%B1%E6%8B%B7%E8%B4%9D%E4%B8%8E%E6%B5%85%E6%8B%B7%E8%B4%9D/';
+        this.page.title = '深拷贝与浅拷贝';
     };
     let disqus_shortname = '';
 
@@ -1048,9 +1093,64 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
+            <div class="card">
+                <a href="/2021/07/22/%E6%B7%B1%E6%8B%B7%E8%B4%9D%E4%B8%8E%E6%B5%85%E6%8B%B7%E8%B4%9D/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="深拷贝与浅拷贝">
+                        
+                        <span class="card-title">深拷贝与浅拷贝</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-07-22
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/C/" class="post-category">
+                                    C#
+                                </a>
+                            
+                            <a href="/categories/C/NET/" class="post-category">
+                                    .NET
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/C/">
+                        <span class="chip bg-color">C#</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
             <div class="card">
                 <a href="/2021/07/20/%E7%86%8A%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/">
                     <div class="card-image">
@@ -1068,9 +1168,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-07-20
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-07-20
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -1088,60 +1188,6 @@
                     
                     <a href="/tags/test/">
                         <span class="chip bg-color">test------------</span>
-                    </a>
-                    
-                </div>
-                
-            </div>
-        </div>
-        
-        
-        <div class="article col s12 m6" data-aos="fade-up">
-            <div class="article-badge right-badge text-color">
-                本篇&nbsp;<i class="far fa-dot-circle"></i>
-            </div>
-            <div class="card">
-                <a href="/2021/07/20/hello-world/">
-                    <div class="card-image">
-                        
-                        
-                        <img src="/medias/featureimages/12.jpg" class="responsive-img" alt="Hello World">
-                        
-                        <span class="card-title">Hello World</span>
-                    </div>
-                </a>
-                <div class="card-content article-content">
-                    <div class="summary block-with-text">
-                        
-                            
-                        
-                    </div>
-                    <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2021-07-20
-                            </span>
-                        <span class="publish-author">
-                            
-                            <i class="fas fa-bookmark fa-fw icon-category"></i>
-                            
-                            <a href="/categories/%E6%B5%8B%E8%AF%95/" class="post-category">
-                                    测试
-                                </a>
-                            
-                            
-                        </span>
-                    </div>
-                </div>
-
-                
-                <div class="card-action article-tags">
-                    
-                    <a href="/tags/Hello-word/">
-                        <span class="chip bg-color">Hello word</span>
-                    </a>
-                    
-                    <a href="/tags/%E6%B5%8B%E8%AF%95/">
-                        <span class="chip bg-color">测试</span>
                     </a>
                     
                 </div>
